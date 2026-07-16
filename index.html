@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Landing Page</title>
+    <style>
+        :root {
+            --bg: #f4f7fb;
+            --surface: #ffffff;
+            --primary: #4f46e5;
+            --primary-dark: #3730a3;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --border: #dbe4f0;
+            --shadow: 0 12px 30px rgba(31, 41, 55, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(180deg, #eef2ff 0%, var(--bg) 100%);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 1px solid rgba(219, 228, 240, 0.9);
+        }
+
+        nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 28px 24px 40px;
+        }
+
+        section {
+            background: var(--surface);
+            padding: 32px;
+            margin-top: 24px;
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        #home {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+        }
+
+        #home h1 {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+
+        #home p {
+            margin-bottom: 18px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        #home a {
+            display: inline-block;
+            background: white;
+            color: var(--primary-dark);
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 999px;
+            font-weight: 700;
+        }
+
+        h2 {
+            margin-bottom: 12px;
+            font-size: 1.7rem;
+        }
+
+        section ul {
+            padding-left: 20px;
+        }
+
+        #services-list {
+            list-style: none;
+            padding-left: 0;
+            display: grid;
+            gap: 12px;
+        }
+
+        #services-list li {
+            background: #f8fbff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+        #services-list li:hover {
+            background: #eef2ff;
+            border-color: var(--primary);
+            color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(79, 70, 229, 0.12);
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 24px;
+            margin-top: 26px;
+        }
+
+        @media (max-width: 700px) {
+            nav {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            #home h1 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">MyBrand</div>
+            <ul>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home">
+            <h1>Assalomu alaykum Bizning saytimizga xush kelibsiz!</h1>
+            <p>Bizning saytimizga xush kelibsiz! Bu oddiy veb-sayt HTML struktura bilan yaratilgan.</p>
+            <a href="#contact">Boshlash uchun</a>
+        </section>
+
+        <section id="about">
+            <h2>Biz Haqimizda</h2>
+            <p>Biznisingizni osishi va ommaboplikka erishish uchun yordam beramiz.</p>
+        </section>
+
+        <section id="services">
+            <h2>Bizning xizmatlar</h2>
+            <ul id="services-list"></ul>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <p>Contact: info@example.com</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const servicesList = document.getElementById('services-list');
+
+            fetch('data.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('HTTP xatolik: ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    data.forEach(item => {
+                        const li = document.createElement('li');
+                        li.textContent = item;
+                        servicesList.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    servicesList.innerHTML = '<li>Ma`lumotlarni yuklashda xatolik yuz berdi.</li>';
+                    console.error(error);
+                });
+        });
+    </script>
+</body>
+</html>
